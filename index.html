@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#352444">
+  <title>HipoBuy spreadsheet — kategorie, rozmiary i zdjęcia QC</title>
+  <meta name="description" content="Poznaj HipoBuy spreadsheet po polsku. Przeglądaj kategorie, porównuj wymiary ubrań, czytaj zdjęcia QC i sprawdzaj koszt całego zamówienia przed zakupem.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:title" content="HipoBuy spreadsheet — wybieraj z większą pewnością">
+  <meta property="og:description" content="Przewodnik po kategoriach, dopasowaniu, zdjęciach QC i przygotowaniu paczki. Konkretne pytania przed zakupem odzieży i dodatków.">
+  <meta property="og:image" content="https://i.ebayimg.com/images/g/ShQAAOSw4-NmyLf~/s-l1600.png">
+  <meta property="og:image:alt" content="Białe sneakersy Nike Air Force 1 na jasnym tle">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://i.ebayimg.com" crossorigin>
+  <style>
+    :root {
+      --paper: #f8f5ee;
+      --ink: #292130;
+      --plum: #352444;
+      --muted: #665e69;
+      --line: #dcd4d8;
+      --lilac: #e8dff0;
+      --lime: #d9ed9c;
+      --white: #fffefa;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.65 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    a:focus-visible,
+    summary:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #795294;
+      outline-offset: 5px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    h1, h2, h3, p, figure { margin: 0; }
+
+    h1, h2, h3 {
+      line-height: 1.12;
+      text-wrap: balance;
+    }
+
+    h1 {
+      font-size: clamp(2.9rem, 6.2vw, 5.6rem);
+      letter-spacing: -.065em;
+      font-weight: 750;
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 3.2vw, 3rem);
+      letter-spacing: -.045em;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      letter-spacing: -.025em;
+    }
+
+    p { margin-top: 1rem; }
+    strong { font-weight: 700; }
+
+    .wrap {
+      width: min(1180px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding-block: 23px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: -.04em;
+    }
+
+    .brand span {
+      display: inline-grid;
+      place-items: center;
+      background: var(--plum);
+      color: var(--lime);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      margin-right: 9px;
+      letter-spacing: 0;
+    }
+
+    .topnote {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    .eyebrow {
+      font-size: .72rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      font-weight: 750;
+    }
+
+    .sectionhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 25px;
+      margin-bottom: 24px;
+    }
+
+    .sectionhead p {
+      max-width: 410px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .catalog { padding-block: 24px 30px; }
+
+    .catalog h2 {
+      font-size: 1rem;
+      letter-spacing: 0;
+      margin-bottom: 15px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .category {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 65px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 650;
+      overflow-wrap: anywhere;
+    }
+
+    .category small {
+      display: block;
+      font-weight: 400;
+      font-size: .72rem;
+      color: var(--muted);
+    }
+
+    .category b {
+      font-weight: 400;
+      color: #766381;
+    }
+
+    .category:hover {
+      background: var(--lilac);
+      border-color: #a88db9;
+      text-decoration: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .hero-copy {
+      padding: 44px 38px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero .eyebrow {
+      margin-bottom: 24px;
+      color: #6d4a7d;
+    }
+
+    .hero .lead {
+      font-size: 1.17rem;
+      line-height: 1.5;
+      max-width: 470px;
+    }
+
+    .hero .sub {
+      color: var(--muted);
+      font-size: .92rem;
+      max-width: 450px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      background: var(--plum);
+      color: white;
+      border-radius: 50px;
+      padding: 14px 24px;
+      text-decoration: none;
+      font-weight: 650;
+      width: fit-content;
+      margin-top: 25px;
+    }
+
+    .button:hover {
+      background: #543961;
+      text-decoration: none;
+    }
+
+    .hero-visual {
+      background: var(--lilac);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+
+    .visual-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: .73rem;
+      letter-spacing: .04em;
+    }
+
+    .hero-visual img {
+      height: 340px;
+      object-fit: contain;
+      background: white;
+      border-radius: 12px;
+      margin-block: 24px;
+    }
+
+    .hero-visual figcaption {
+      font-size: .79rem;
+      color: #514456;
+      line-height: 1.5;
+    }
+
+    .hero-visual figcaption strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .answer {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 30px;
+      padding: 31px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .answer h2 {
+      font-size: 1rem;
+      letter-spacing: 0;
+      line-height: 1.5;
+    }
+
+    .answer p {
+      margin: 0;
+      max-width: 830px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 26px;
+      padding-block: 32px 50px;
+    }
+
+    .step {
+      border-left: 2px solid #b9a8c5;
+      padding-left: 17px;
+    }
+
+    .step .eyebrow { color: #735a83; }
+
+    .step h3 {
+      margin-top: 10px;
+      font-size: 1.13rem;
+    }
+
+    .step p {
+      font-size: .9rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .feature { padding-block: 24px 58px; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+    }
+
+    .feature-image {
+      border-radius: var(--radius);
+      background: #e8e9e1;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-image img {
+      height: 375px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    .feature-image figcaption {
+      font-size: .83rem;
+      margin-top: 15px;
+    }
+
+    .feature-text {
+      background: var(--plum);
+      color: var(--paper);
+      padding: 32px;
+      border-radius: var(--radius);
+    }
+
+    .feature-text h3 { font-size: 1.6rem; }
+
+    .feature-text p {
+      color: #e2d9e6;
+      font-size: .94rem;
+    }
+
+    .feature-text ul {
+      padding-left: 20px;
+      margin-block: 23px 0;
+    }
+
+    .feature-text li { padding-block: 5px; }
+
+    .feature-text .button {
+      background: var(--lime);
+      color: var(--ink);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .gallery figure { min-width: 0; }
+
+    .gallery img {
+      height: 235px;
+      object-fit: contain;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .gallery figcaption {
+      font-size: .84rem;
+      margin-top: 12px;
+      color: var(--muted);
+    }
+
+    .gallery figcaption strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .caption-note {
+      font-size: .79rem;
+      color: var(--muted);
+      max-width: 850px;
+    }
+
+    .reading {
+      padding-block: 35px 55px;
+      border-top: 1px solid var(--line);
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+    }
+
+    .article {
+      border-top: 3px solid var(--plum);
+      padding-top: 20px;
+    }
+
+    .article .eyebrow {
+      color: #755786;
+      margin-bottom: 14px;
+    }
+
+    .article h3 { font-size: 1.5rem; }
+
+    .article p {
+      font-size: .92rem;
+      color: var(--muted);
+    }
+
+    .article p strong { color: var(--ink); }
+
+    .check-panel {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 40px;
+      padding: 35px;
+      background: var(--lime);
+      border-radius: var(--radius);
+      margin-bottom: 55px;
+    }
+
+    .check-panel p { font-size: .92rem; }
+
+    .checks {
+      display: grid;
+      gap: 11px;
+    }
+
+    .checks label {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-bottom: 1px solid #b5c57f;
+      padding-bottom: 11px;
+      font-size: .92rem;
+    }
+
+    .checks input {
+      width: 19px;
+      height: 19px;
+      accent-color: var(--plum);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .faq {
+      display: grid;
+      grid-template-columns: .7fr 1.3fr;
+      gap: 60px;
+      padding-bottom: 55px;
+    }
+
+    .faq-intro p {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .faq-list details {
+      border-top: 1px solid var(--line);
+      padding-block: 18px;
+    }
+
+    .faq-list details:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 650;
+      line-height: 1.5;
+      padding-right: 12px;
+    }
+
+    .faq-list details p {
+      font-size: .93rem;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .closing {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+      border-top: 1px solid var(--line);
+      padding-block: 25px 35px;
+    }
+
+    .closing h2 { font-size: 1.5rem; }
+
+    .closing .button {
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    footer {
+      background: var(--plum);
+      color: #e6dfea;
+      padding-block: 28px;
+      font-size: .79rem;
+    }
+
+    footer .wrap {
+      display: flex;
+      gap: 35px;
+      justify-content: space-between;
+    }
+
+    footer p {
+      margin: 0;
+      max-width: 720px;
+    }
+
+    footer a { white-space: nowrap; }
+
+    @media (min-width: 900px) {
+      .feature, .reading, .faq {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 650px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-copy { padding: 30px 25px; }
+      .hero-visual { padding: 20px; }
+      .hero-visual img { height: 290px; }
+
+      .article-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .article p { max-width: 75ch; }
+      .faq { gap: 30px; }
+      .feature-text { padding: 25px; }
+      .check-panel { gap: 25px; }
+    }
+
+    @media (max-width: 620px) {
+      .wrap { width: calc(100% - 28px); }
+      .topbar { padding-block: 17px; }
+
+      .topnote {
+        max-width: 120px;
+        text-align: right;
+        font-size: .7rem;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .category {
+        min-height: 60px;
+        padding: 10px;
+      }
+
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding: 29px 23px; }
+      .hero .eyebrow { margin-bottom: 18px; }
+
+      .hero-visual img {
+        height: 250px;
+        margin-block: 15px;
+      }
+
+      .hero-visual { padding: 20px; }
+
+      .answer {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding-bottom: 35px;
+      }
+
+      .sectionhead { display: block; }
+      .sectionhead p { margin-top: 14px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .feature-image { padding: 18px; }
+      .feature-image img { height: 280px; }
+
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .gallery figure {
+        display: grid;
+        grid-template-columns: 135px 1fr;
+        gap: 17px;
+        align-items: center;
+      }
+
+      .gallery img {
+        height: 140px;
+        padding: 8px;
+      }
+
+      .gallery figcaption { margin: 0; }
+
+      .check-panel {
+        grid-template-columns: 1fr;
+        padding: 25px;
+        gap: 22px;
+      }
+
+      .faq {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .closing {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      footer .wrap {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .feature { padding-bottom: 35px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .wrap { width: 100%; }
+
+      .hero, .feature-grid, .faq, .check-panel {
+        display: block;
+      }
+
+      .hero-visual, .gallery, .feature-image,
+      .button, .catalog, .checks {
+        display: none;
+      }
+
+      .feature-text, footer {
+        background: white;
+        color: black;
+      }
+
+      .feature-text p, footer p { color: black; }
+      .article-grid { display: block; }
+      .article { margin-bottom: 25px; }
+
+      .feature, .reading, .faq {
+        content-visibility: visible;
+      }
+    }
+  </style>
+
+  <!--
+    index.html. Opracowanie autorskie, bez kopiowania opisów ofert.
+    Zapytanie badawcze: HipoBuy spreadsheet.
+    Bezpośredni dostęp do wyników Google był niedostępny;
+    nie potwierdzono kolejności pierwszej strony Google.
+
+    Przejrzane serwisy z dostępnej wyszukiwarki:
+    ssfinds.com/hipobuy-spreadsheet
+    hipobuybuy.courses
+    spreadsheets-hipobuy.com
+    hipobuy-sheets.com
+    hipospreadsheets.com
+    hipo-sheets.com
+    hippoobuy.net
+    hipobuy-finds.com/spreadsheet
+    hiipobuy.com
+    hipobuybuy.monster
+
+    Wspólne tematy: kategorie, linki do produktów, wymiary,
+    QC i koszty wysyłki. Nie przeniesiono deklaracji o cenach,
+    rabatach, autentyczności ani liczbie ofert.
+
+    Kanoniczny adres i og:url należy ustawić
+    na własny adres po wdrożeniu.
+  -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "HipoBuy spreadsheet — kategorie, rozmiary i zdjęcia QC",
+        "description": "Polski przewodnik po wyborze kategorii, porównywaniu wymiarów, analizie zdjęć QC i przygotowaniu paczki.",
+        "inLanguage": "pl-PL",
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "Katalog produktów HipoBuy"
+          },
+          {
+            "@type": "Thing",
+            "name": "Zdjęcia QC HipoBuy"
+          },
+          {
+            "@type": "Thing",
+            "name": "Rozmiary HipoBuy"
+          },
+          {
+            "@type": "Thing",
+            "name": "Wysyłka HipoBuy"
+          }
+        ],
+        "hasPart": [
+          {
+            "@type": "Article",
+            "headline": "Rozmiary HipoBuy: od pomiaru do dopasowania",
+            "inLanguage": "pl-PL",
+            "description": "Porównanie długości wkładki, szerokości bluzy, wymiarów spodni i kroju koszulek."
+          },
+          {
+            "@type": "Article",
+            "headline": "Zdjęcia QC HipoBuy: czytaj szczegóły",
+            "inLanguage": "pl-PL",
+            "description": "Sprawdzanie wariantu, szwów, nadruków, akcesoriów i ograniczeń oceny ze zdjęć."
+          },
+          {
+            "@type": "Article",
+            "headline": "Wysyłka HipoBuy: policz całość",
+            "inLanguage": "pl-PL",
+            "description": "Lista kosztów do potwierdzenia, wymiary paczki, warunki trasy i informacje do śledzenia."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "inLanguage": "pl-PL",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Czym jest HipoBuy spreadsheet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "To uporządkowana lista odnośników do produktów, zwykle podzielona na kategorie. Pomaga przygotować wybór, ale dostępność, wymiary i warunki zakupu trzeba potwierdzić w aktualnej ofercie."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Dokąd prowadzą odnośniki na tej stronie?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Kafelki kategorii otwierają odpowiednie działy HipobuyFind. Pozostałe odnośniki prowadzą do strony głównej hipobuyfind.com. To punkt startowy do przeglądania, a nie bezpośredni koszyk HipoBuy."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Jak dobrać rozmiar butów i ubrań?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Porównaj tabelę konkretnego wariantu z pomiarami wygodnej pary butów lub ubrania. Przy butach rozróżnij długość stopy i wkładki; przy ubraniach sprawdź sposób pomiaru, szerokość i długość."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy zdjęcia QC potwierdzają autentyczność?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nie. Zdjęcia QC mogą pokazać wygląd, widoczne wady i zgodność wariantu. Nie stanowią samodzielnego potwierdzenia autentyczności, składu materiału ani trwałości produktu."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy cena produktu obejmuje dostawę do Polski?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nie zakładaj, że obejmuje. Sprawdź osobno cenę produktu, dostawę krajową, opłaty obsługi, transport międzynarodowy oraz ewentualne podatki i należności importowe. Ta strona nie podaje wycen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy jest to oficjalna strona HipoBuy lub pokazanych marek?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nie. To niezależny przewodnik po przeglądaniu produktów. Nazwy i zdjęcia marek służą jako przykłady wizualne; nie oznaczają partnerstwa, autoryzacji ani potwierdzonej dostępności w katalogu docelowym."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+<link rel="canonical" href="https://kakobuyfinds.github.io/rqlyd/">
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="https://www.hipobuyfind.com">
+      <span aria-hidden="true">h.</span>Notatnik wyboru
+    </a>
+    <div class="topnote">
+      Kategorie, proporcje, szczegóły.<br>
+      Przewodnik po polsku.
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav class="catalog" aria-labelledby="categories-title">
+      <h2 id="categories-title">Zacznij od kategorii</h2>
+
+      <div class="category-grid">
+        <a class="category" href="https://hipobuyfind.com/category-911-Shoes.html">
+          <span>Buty<small lang="en">Shoes</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-912-Hoodies%2FSweaters.html">
+          <span>Bluzy i swetry<small lang="en">Hoodies/Sweaters</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-913-T-Shirts.html">
+          <span>Koszulki<small lang="en">T-Shirts</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-914-Jackets.html">
+          <span>Kurtki<small lang="en">Jackets</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-915-Pants%2FShorts.html">
+          <span>Spodnie i szorty<small lang="en">Pants/Shorts</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-916-Headwear.html">
+          <span>Nakrycia głowy<small lang="en">Headwear</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-917-Sets.html">
+          <span>Komplety<small lang="en">Sets</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-918-underwear%2Funderpants.html">
+          <span>Bielizna<small lang="en">Underwear/underpants</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-919-Jersey.html">
+          <span>Koszulki sportowe<small lang="en">Jersey</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+
+        <a class="category" href="https://hipobuyfind.com/category-920-Accessories.html">
+          <span>Akcesoria<small lang="en">Accessories</small></span>
+          <b aria-hidden="true">↗</b>
+        </a>
+      </div>
+    </nav>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow">Mniej zgadywania. Więcej konkretów.</div>
+        <h1 id="hero-title">HipoBuy<br>spreadsheet</h1>
+        <p class="lead">Dobry wybór zaczyna się od szczegółu.</p>
+        <p class="sub">
+          Najpierw kategoria, potem wymiary i zdjęcia. Uporządkuj poszukiwania
+          ubrań, sneakersów oraz dodatków, zanim podejmiesz decyzję o zakupie.
+        </p>
+        <a class="button" href="https://www.hipobuyfind.com">
+          Otwórz katalog <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <figure class="hero-visual">
+        <div class="visual-label">
+          <span>01 / OBUWIE</span>
+          <span>FORMA I DOPASOWANIE</span>
+        </div>
+        <img
+          src="https://i.ebayimg.com/images/g/ShQAAOSw4-NmyLf~/s-l1600.png"
+          width="640"
+          height="440"
+          alt="Białe sneakersy Nike Air Force 1 z perforowanym noskiem i bocznym znakiem Swoosh"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async">
+        <figcaption>
+          <strong>Nike Air Force 1 — przykład wizualny</strong>
+          Oglądaj proporcje, ale rozmiar wybieraj według tabeli konkretnej oferty.
+          Fotografia nie jest deklaracją dostępności.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="answer" aria-labelledby="definition-title">
+      <h2 id="definition-title">Co daje taka lista?</h2>
+      <p>
+        <strong>HipoBuy spreadsheet to uporządkowany zbiór linków do produktów.</strong>
+        Ułatwia porównanie kategorii i przygotowanie krótkiej listy.
+        Sam wpis nie potwierdza jakości ani aktualności oferty:
+        te informacje sprawdź na stronie wybranego produktu.
+      </p>
+    </section>
+
+    <div class="steps" aria-label="Kolejność przeglądania">
+      <section class="step">
+        <div class="eyebrow">Krok 01</div>
+        <h3>Ogranicz wybór</h3>
+        <p>
+          Katalog produktów HipoBuy przeglądaj według zastosowania:
+          buty na co dzień, warstwa na chłód albo mały dodatek do gotowej stylizacji.
+        </p>
+      </section>
+
+      <section class="step">
+        <div class="eyebrow">Krok 02</div>
+        <h3>Zapisz wariant</h3>
+        <p>
+          Porównanie ofert HipoBuy ma sens, gdy dotyczą tego samego koloru,
+          rozmiaru i sprzedawcy. Zachowaj dokładną nazwę oraz link źródłowy.
+        </p>
+      </section>
+
+      <section class="step">
+        <div class="eyebrow">Krok 03</div>
+        <h3>Sprawdź całość</h3>
+        <p>
+          Lista zakupów HipoBuy powinna uwzględniać pomiary, pytania o materiał
+          oraz koszty, które pozostają do potwierdzenia przed płatnością.
+        </p>
+      </section>
+    </div>
+
+    <section class="feature" aria-labelledby="details-title">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">Temat przewodni / świadome porównanie</div>
+          <h2 id="details-title">Nie tylko nazwa na metce.</h2>
+        </div>
+        <p>
+          Pięć przykładów wizualnych, jeden nawyk: zapytaj, co dokładnie widzisz
+          i czego jeszcze nie wiesz.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <figure class="feature-image">
+          <img
+            src="https://kream-phinf.pstatic.net/MjAyNTA3MzFfMTQ2/MDAxNzUzOTExMzUwMDIx.x5k5adT4uQnIix_U8MvzIa15yUYna4S4LpFN4Y885A8g.zsIeFzbM_4iV0s3JfjI03iFre9uuFaE3BJFueWfF_Wkg.PNG/a_6a1bfd0aca334b6b99baaf1803c5588e.png"
+            width="620"
+            height="500"
+            loading="lazy"
+            decoding="async"
+            alt="Granatowa kurtka jeansowa Louis Vuitton z dwiema dużymi kieszeniami z przodu">
+          <figcaption>
+            <strong>Louis Vuitton / konstrukcja kurtki.</strong>
+            Zwróć uwagę na układ kieszeni, linię ramion i miejsce na warstwę pod spodem.
+          </figcaption>
+        </figure>
+
+        <div class="feature-text">
+          <h3>Zbuduj wybór, który pasuje do Ciebie.</h3>
+          <p>
+            Przy porównywaniu kurtek HipoBuy sprawdź szerokość pod pachami
+            i długość rękawa. Przy wyborze bluzy HipoBuy uwzględnij zapas na koszulkę,
+            a przy doborze kompletu HipoBuy oceń górę i dół osobno.
+          </p>
+          <ul>
+            <li>Dobór koszulki sportowej: krój, długość i położenie nadruku.</li>
+            <li>Wybór bielizny: skład, tabela wymiarów i zasady zwrotu.</li>
+            <li>Porównanie swetrów: splot, wykończenie i opis pielęgnacji.</li>
+          </ul>
+          <a class="button" href="https://www.hipobuyfind.com">
+            Przejrzyj dostępne działy <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <figure>
+          <img
+            src="https://cdn.theluxurycloset.com/uploads/opt/products/750x750/luxury-women-gucci-used-accessories-p1150835-001.jpg"
+            width="360"
+            height="300"
+            alt="Beżowa czapka Gucci z daszkiem, brązowym obszyciem i wzorem GG"
+            loading="lazy"
+            decoding="async">
+          <figcaption>
+            <strong>Gucci / nakrycia głowy</strong>
+            Przy wyborze czapki HipoBuy porównaj obwód, głębokość i zakres regulacji.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="https://www.luxe-em.com/cdn/shop/files/001_3e78aa64-04f3-4ec6-81eb-e3aad7cdb5bc.jpg?width=600"
+            width="360"
+            height="300"
+            alt="Pomarańczowa apaszka Hermès z symetrycznym wzorem ozdobnych kluczy"
+            loading="lazy"
+            decoding="async">
+          <figcaption>
+            <strong>Hermès / proporcje dodatku</strong>
+            Przy porównaniu apaszek sprawdź wymiary, skład i sposób wykończenia brzegów.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="https://www.luxedh.com/cdn/shop/products/Dior-Crystal-DioRevolution-Chain-Choker-Necklace_185584_front_0_parent.jpg?width=600"
+            width="360"
+            height="300"
+            alt="Naszyjnik Dior w złotym kolorze z dużymi ogniwami i literami ozdobionymi kryształkami"
+            loading="lazy"
+            decoding="async">
+          <figcaption>
+            <strong>Dior / biżuteria</strong>
+            Przy wyborze biżuterii HipoBuy zapytaj o materiał, długość łańcuszka i zapięcie.
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="caption-note">
+        Zdjęcia ilustrują fasony i detale. Nie są ofertami sprzedaży, zdjęciami QC
+        Twojego zamówienia ani potwierdzeniem autentyczności. Marki nie są powiązane
+        z tym przewodnikiem.
+      </p>
+    </section>
+
+    <section class="reading" aria-labelledby="reading-title">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">Czytelnia / trzy krótkie poradniki</div>
+          <h2 id="reading-title">Zanim zapiszesz produkt.</h2>
+        </div>
+        <p>
+          Praktyczne odpowiedzi dla osób, które chcą porównać konkretne dane
+          zamiast samych miniatur.
+        </p>
+      </div>
+
+      <div class="article-grid">
+        <article class="article">
+          <div class="eyebrow">01 / dopasowanie</div>
+          <h3>Rozmiary HipoBuy: od pomiaru do dopasowania</h3>
+          <p>
+            <strong>Jak dobrać rozmiar sneakersów?</strong>
+            Zmierz obie stopy i porównaj większy wynik z tabelą produktu.
+            Długość stopy a długość wkładki to różne wartości; sprawdź, którą
+            podaje sprzedawca. Nie przenoś automatycznie rozmiaru między modelami.
+          </p>
+          <p>
+            <strong>Wymiary bluzy mierzone na płasko</strong>
+            porównaj z własną, wygodną bluzą. Szerokość klatki piersiowej,
+            długość korpusu i rękaw pozwalają lepiej ocenić krój oversize
+            niż sama litera rozmiaru. Przy koszulce sprawdź też linię ramion.
+          </p>
+          <p>
+            <strong>Tabela rozmiarów spodni</strong>
+            powinna wyjaśniać, czy podaje obwód, czy szerokość pasa.
+            Dodaj długość nogawki oraz wysokość stanu. Dopasowanie szortów
+            oceniaj również po szerokości uda; brakujących pomiarów nie zgaduj.
+          </p>
+        </article>
+
+        <article class="article">
+          <div class="eyebrow">02 / oględziny</div>
+          <h3>Zdjęcia QC HipoBuy: czytaj szczegóły</h3>
+          <p>
+            <strong>Jak sprawdzać zdjęcia QC?</strong>
+            Zacznij od zgodności koloru, rozmiaru i liczby elementów.
+            Kontrola szwów i nadruku wymaga zbliżeń; jeśli szeroki kadr ukrywa
+            szczegół, poproś o dokładniejsze zdjęcie zamiast zakładać,
+            że wszystko jest w porządku.
+          </p>
+          <p>
+            <strong>Porównanie butów na zdjęciach QC</strong>
+            obejmuje oba boki, noski i podeszwy. Różnice w oświetleniu mogą
+            zmieniać odbiór koloru. Przy akcesoriach sprawdź zapięcia, krawędzie
+            i symetrię, a przy nakryciach głowy również regulację.
+          </p>
+          <p>
+            <strong>Ocena materiału ze zdjęcia</strong>
+            ma ograniczenia. Fotografia nie potwierdza składu ani wygody.
+            Pytania do sprzedawcy przed zakupem powinny dotyczyć brakujących
+            danych, a nie wyłącznie tego, czy produkt wygląda podobnie
+            do zdjęcia promocyjnego.
+          </p>
+        </article>
+
+        <article class="article">
+          <div class="eyebrow">03 / plan paczki</div>
+          <h3>Wysyłka HipoBuy: policz całość</h3>
+          <p>
+            <strong>Koszt wysyłki do Polski</strong>
+            potwierdź dla wybranej trasy i przygotowanej paczki. Rozdziel cenę
+            produktu, transport krajowy, opłaty obsługi i przewóz międzynarodowy.
+            Sprawdź także ewentualne należności importowe oraz warunki ich rozliczenia.
+          </p>
+          <p>
+            <strong>Waga rzeczywista a gabarytowa</strong>
+            mogą dawać inny wynik. Ustal, jak przewoźnik wyznacza wagę rozliczeniową.
+            Pakowanie butów z pudełkiem i bez pudełka może zmienić objętość;
+            decyzję podejmij z uwzględnieniem ochrony zawartości.
+          </p>
+          <p>
+            <strong>Łączenie zamówień w jedną paczkę</strong>
+            oceń na podstawie wyceny, limitów i ochrony produktów.
+            Przed zatwierdzeniem sprawdź zasady zwrotów, zakres ubezpieczenia
+            oraz dane adresowe. Do śledzenia przesyłki zachowaj numer paczki
+            i nazwę przewoźnika.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="check-panel" aria-labelledby="check-title">
+      <div>
+        <div class="eyebrow">Twoja szybka kontrola</div>
+        <h2 id="check-title">Gotowe do kolejnego kroku?</h2>
+        <p>
+          Zaznacz punkty sprawdzone dla konkretnego produktu. Lista służy
+          do bieżącego przeglądu; nie zapisuje odpowiedzi po zamknięciu strony.
+        </p>
+      </div>
+
+      <div class="checks">
+        <label>
+          <input type="checkbox">
+          <span>Potwierdzam aktualny link, wybrany kolor i rozmiar.</span>
+        </label>
+        <label>
+          <input type="checkbox">
+          <span>Porównuję podane wymiary z własnym ubraniem lub obuwiem.</span>
+        </label>
+        <label>
+          <input type="checkbox">
+          <span>Rozróżniam zdjęcia promocyjne i zdjęcia konkretnej sztuki.</span>
+        </label>
+        <label>
+          <input type="checkbox">
+          <span>Sprawdzam koszt całkowity i warunki dostawy.</span>
+        </label>
+        <label>
+          <input type="checkbox">
+          <span>Znam zasady zwrotu oraz kwestie wymagające wyjaśnienia.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="faq-intro">
+        <div class="eyebrow">FAQ / odpowiedzi wprost</div>
+        <h2 id="faq-title">Najpierw wyjaśnij wątpliwości.</h2>
+        <p>
+          Krótka odpowiedź pomaga ustalić, jakie informacje trzeba jeszcze
+          sprawdzić przed decyzją.
+        </p>
+      </div>
+
+      <div class="faq-list">
+        <details open>
+          <summary>Czym jest HipoBuy spreadsheet?</summary>
+          <p>To uporządkowana lista odnośników do produktów, zwykle podzielona na kategorie. Pomaga przygotować wybór, ale dostępność, wymiary i warunki zakupu trzeba potwierdzić w aktualnej ofercie.</p>
+        </details>
+
+        <details>
+          <summary>Dokąd prowadzą odnośniki na tej stronie?</summary>
+          <p>Kafelki kategorii otwierają odpowiednie działy HipobuyFind. Pozostałe odnośniki prowadzą do strony głównej hipobuyfind.com. To punkt startowy do przeglądania, a nie bezpośredni koszyk HipoBuy.</p>
+        </details>
+
+        <details>
+          <summary>Jak dobrać rozmiar butów i ubrań?</summary>
+          <p>Porównaj tabelę konkretnego wariantu z pomiarami wygodnej pary butów lub ubrania. Przy butach rozróżnij długość stopy i wkładki; przy ubraniach sprawdź sposób pomiaru, szerokość i długość.</p>
+        </details>
+
+        <details>
+          <summary>Czy zdjęcia QC potwierdzają autentyczność?</summary>
+          <p>Nie. Zdjęcia QC mogą pokazać wygląd, widoczne wady i zgodność wariantu. Nie stanowią samodzielnego potwierdzenia autentyczności, składu materiału ani trwałości produktu.</p>
+        </details>
+
+        <details>
+          <summary>Czy cena produktu obejmuje dostawę do Polski?</summary>
+          <p>Nie zakładaj, że obejmuje. Sprawdź osobno cenę produktu, dostawę krajową, opłaty obsługi, transport międzynarodowy oraz ewentualne podatki i należności importowe. Ta strona nie podaje wycen.</p>
+        </details>
+
+        <details>
+          <summary>Czy jest to oficjalna strona HipoBuy lub pokazanych marek?</summary>
+          <p>Nie. To niezależny przewodnik po przeglądaniu produktów. Nazwy i zdjęcia marek służą jako przykłady wizualne; nie oznaczają partnerstwa, autoryzacji ani potwierdzonej dostępności w katalogu docelowym.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="closing" aria-label="Przejdź do przeglądania">
+      <div>
+        <h2>Masz kryteria. Teraz wybierz kategorię.</h2>
+        <p>Wróć do katalogu z własną listą pytań i pomiarów.</p>
+      </div>
+      <a class="button" href="https://www.hipobuyfind.com">
+        Przeglądaj HipobuyFind <span aria-hidden="true">↗</span>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>
+        <strong>Notatnik wyboru.</strong>
+        Niezależny przewodnik o przeglądaniu odzieży, obuwia i dodatków.
+        Nazwy marek identyfikują przykłady wizualne. Przed zakupem potwierdź
+        informacje w aktualnej ofercie.
+      </p>
+      <a href="https://www.hipobuyfind.com">Otwórz HipobuyFind ↗</a>
+    </div>
+  </footer>
+</body>
+</html>
